@@ -1,5 +1,5 @@
 /*
- * Board class is the representation of the board of the game
+ * The Board class is the class that defines the structure of the game table.
  */
 package forza4;
 
@@ -51,8 +51,8 @@ public class Board {
         this.aiPlayer = aiPlayer;
     }
     
-    //method that prints the board. 
-    //Prints the cell of the matrix
+    //Method that prints the table. Scrolls the cells of the matrix
+    //and prints their contents.
     public static void printBoard(Board board){
         Disc[][] matrix = board.getGrid();
         Disc huPlayer = board.getHuPlayer();

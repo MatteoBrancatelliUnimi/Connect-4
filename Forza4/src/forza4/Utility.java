@@ -1,6 +1,6 @@
 /*
- * Utility class is used to ask to insert a number, a char,...
- * It hasn't attributes, only methods.
+ * Class used to print menus and request user input
+ * Performs checks on user input and catches exceptions if necessary.
  */
 package forza4;
 
@@ -15,7 +15,8 @@ import java.io.InputStreamReader;
 public class Utility {
     private static final BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
     
-    //Ask to choose between red disc or yellow disc
+    //Method that asks the user whether he wants to play with yellow or red.
+    //Sets the value of the huPlayer and aiPlayer properties of the board object.
     public static void askForPlayer(Board board) throws IOException{
         StringBuilder menu = new StringBuilder();
         menu.append(" Choose your player color: \n");
@@ -34,7 +35,8 @@ public class Utility {
         }
     }
     
-    //Method to get an integer value from the user, w/ errors check
+    //Method that asks the user for an integer value.
+    //Try-catch block for error handling.
     public static int askForInteger(String msg, int min, int max) throws IOException {
         int value = 0;
         boolean checkValid = false;
@@ -55,13 +57,13 @@ public class Utility {
         return value;
     }   
     
-    //method to display the end game message
+    //method that, based on the parameters passed, prints a message with the final status of the game.
     public static void displayEndGameMessage(Disc player, int score){
         switch(score){
-            case 10000:
+            case 100:
                 System.out.println("Player "+player+" won the game! Congratulations.");
                 break;
-            case -10000:
+            case -100:
                 System.out.println("AI ["+player+"] won the game!");
                 break;
             case 0:
@@ -69,7 +71,8 @@ public class Utility {
         }
     }
     
-    //Method to get an integer value from the user, w/ errors check
+    //Method that asks the user for a char value.
+    //Try-catch block for error handling.
     public static char askForChar(char values[]) throws IOException{
         char answer = 0;
         boolean checkValid = false;
@@ -91,7 +94,8 @@ public class Utility {
         return answer;
     }
     
-    //method that asks the user if he wants to play again
+    //Method that asks the user if they want to play another game.
+    //Returns true if yes, no otherwise.
     public static boolean askForRestartGame() throws IOException{
         System.out.println(" Do you want to play again?[Y/N] ");
         char answer = askForChar(new char[]{'Y','N'});
@@ -102,7 +106,7 @@ public class Utility {
         }
     }
     
-    //method that prints a banner and a short explanation of the game
+    //Metodo that prints a banner and a short description of the game
     public static void printMenu(){
         StringBuilder menu = new StringBuilder();
         menu.append(" _______   ______   .______       ________       ___       _  _    \n" +

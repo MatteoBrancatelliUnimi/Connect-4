@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Game class.
  */
 package forza4;
 
@@ -13,6 +11,7 @@ import java.io.IOException;
  */
 public class Game {
 
+        //Method that starts the game and let both players to make a move.
         public static void play(Board board) throws IOException{
         Disc[][] matrix = board.getGrid();
         int column = board.getColumn();
@@ -21,12 +20,12 @@ public class Game {
         Disc aiPlayer = board.getAiPlayer();
         Board.printBoard(board);
         System.out.println();
-        while(checkResult(board) != 10000 && checkResult(board) != -10000 && isBoardAvailable(matrix)){
+        while(checkResult(board) != 100 && checkResult(board) != -100 && isBoardAvailable(matrix)){
             column = playerMove(matrix);
             matrix = dropCoin(matrix, column, huPlayer);
             Board.printBoard(board);
             System.out.println(); 
-            if(checkResult(board) == 10000 || checkResult(board) == -10000 && isBoardAvailable(matrix)){
+            if(checkResult(board) == 100 || checkResult(board) == -100 && isBoardAvailable(matrix)){
                 break;
             }
             column = AI.findMove(board);
@@ -35,14 +34,18 @@ public class Game {
             System.out.println();
         }
         
-        if(checkResult(board) == 10000){
-            Utility.displayEndGameMessage(huPlayer,10000);
-        }else if(checkResult(board) == -10000){
-            Utility.displayEndGameMessage(aiPlayer, -10000);
+        if(checkResult(board) == 100){
+            Utility.displayEndGameMessage(huPlayer,100);
+        }else if(checkResult(board) == -100){
+            Utility.displayEndGameMessage(aiPlayer, -100);
         }else{
             Utility.displayEndGameMessage(Disc.NONE, 0);
         }
     }
+        
+    //Method that check if 2,3, or 4 discs are in a row, and assigns a value
+    //based on the player (positive values if human player, negative values if
+    //aiPlayer).
     public static int checkResult(Board board) {
         Disc[][] matrix = board.getGrid();
         Disc huPlayer = board.getHuPlayer();
@@ -54,24 +57,24 @@ public class Game {
                         //check score for human player
                         if(matrix[i][j] == matrix[i+1][j] && matrix[i][j] == matrix[i+2][j] && matrix[i][j] == matrix[i+3][j] &&
                            matrix[i][j] == huPlayer){
-                                return 10000;
+                                return 100;
 
                         }else if(matrix[i][j] == matrix[i+1][j] && matrix[i][j] == matrix[i+2][j] && matrix[i][j] == huPlayer){
-                                score += 100;
+                                score += 10;
 
                         }else if(matrix[i][j] == matrix[i+1][j] && matrix[i][j] == huPlayer){
-                                score += 50;
+                                score += 1;
                         }
                         //check score for AI player
                         if(matrix[i][j] == matrix[i+1][j] && matrix[i][j] == matrix[i+2][j] && matrix[i][j] == matrix[i+3][j] &&
                            matrix[i][j] == aiPlayer){
-                                return -10000;
+                                return -100;
 
                     }else if(matrix[i][j] == matrix[i+1][j] && matrix[i][j] == matrix[i+2][j] && matrix[i][j] == aiPlayer){
-                                score -= 100;
+                                score -= 10;
 
                         }else if(matrix[i][j] == matrix[i+1][j] && matrix[i][j] == aiPlayer){
-                                score -= 50;
+                                score -= 1;
 
                         }
                 }
@@ -82,24 +85,24 @@ public class Game {
                         //check score for human player
                         if(matrix[i][j] == matrix[i][j+1] && matrix[i][j] == matrix[i][j+2] && matrix[i][j] == matrix[i][j+3] &&
                            matrix[i][j] == huPlayer){
-                                return 10000;
+                                return 100;
 
                         }else if(matrix[i][j] == matrix[i][j+1] && matrix[i][j] == matrix[i][j+2] && matrix[i][j] == huPlayer){
-                                score += 100;
+                                score += 10;
 
                         }else if(matrix[i][j] == matrix[i][j+2] && matrix[i][j] == huPlayer){
-                                score += 50;
+                                score += 1;
                         }
                         //check score for AI player
                         if(matrix[i][j] == matrix[i][j+1] && matrix[i][j] == matrix[i][j+2] && matrix[i][j] == matrix[i][j+3] &&
                            matrix[i][j] == aiPlayer){
-                                return -10000;
+                                return -100;
 
                     }else if(matrix[i][j] == matrix[i][j+1] && matrix[i][j] == matrix[i][j+2] && matrix[i][j] == aiPlayer){
-                                score -= 100;
+                                score -= 10;
 
                         }else if(matrix[i][j] == matrix[i][j+1] && matrix[i][j] == aiPlayer){
-                                score -= 50;
+                                score -= 1;
 
                         }
                 }
@@ -110,24 +113,24 @@ public class Game {
                         //check score for human player
                         if(matrix[i][j] == matrix[i+1][j+1] && matrix[i][j] == matrix[i+2][j+2] && matrix[i][j] == matrix[i+3][j+3] &&
                            matrix[i][j] == huPlayer){
-                                return 10000;
+                                return 100;
 
                         }else if(matrix[i][j] == matrix[i+1][j+1] && matrix[i][j] == matrix[i+2][j+2] && matrix[i][j] == huPlayer){
-                                score += 100;
+                                score += 10;
 
                         }else if(matrix[i][j] == matrix[i+1][j+1] && matrix[i][j] == huPlayer){
-                                score += 50;
+                                score += 1;
                         }
                         //check score for AI player
                         if(matrix[i][j] == matrix[i+1][j+1] && matrix[i][j] == matrix[i+2][j+2] && matrix[i][j] == matrix[i+3][j+3] &&
                            matrix[i][j] == aiPlayer){
-                                return -10000;
+                                return -100;
 
                     }else if(matrix[i][j] == matrix[i+1][j+1] && matrix[i][j] == matrix[i+2][j+2] && matrix[i][j] == aiPlayer){
-                                score -= 100;
+                                score -= 10;
 
                         }else if(matrix[i][j] == matrix[i+1][j+1] && matrix[i][j] == aiPlayer){
-                                score -= 50;
+                                score -= 1;
 
                         }
                 }
@@ -138,24 +141,24 @@ public class Game {
                         //check score for human player
                         if(matrix[i][j] == matrix[i+1][j-1] && matrix[i][j] == matrix[i+2][j-2] && matrix[i][j] == matrix[i+3][j-3] &&
                            matrix[i][j] == huPlayer){
-                                return 10000;
+                                return 100;
 
                         }else if(matrix[i][j] == matrix[i+1][j-1] && matrix[i][j] == matrix[i+2][j-2] && matrix[i][j] == huPlayer){
-                                score += 100;
+                                score += 10;
 
                         }else if(matrix[i][j] == matrix[i+1][j-1] && matrix[i][j] == huPlayer){
-                                score += 50;
+                                score += 1;
                         }
                         //check score for AI player
                         if(matrix[i][j] == matrix[i+1][j-1] && matrix[i][j] == matrix[i+2][j-2] && matrix[i][j] == matrix[i+3][j-3] &&
                            matrix[i][j] == aiPlayer){
-                                return -10000;
+                                return -100;
 
                     }else if(matrix[i][j] == matrix[i+1][j-1] && matrix[i][j] == matrix[i+2][j-2] && matrix[i][j] == aiPlayer){
-                                score -= 100;
+                                score -= 10;
 
                         }else if(matrix[i][j] == matrix[i+1][j-1] && matrix[i][j] == aiPlayer){
-                                score -= 50;
+                                score -= 1;
 
                         }
                 }
@@ -163,6 +166,9 @@ public class Game {
 
         return score;
     }
+    
+    //Method that check if the board if full or there are some empty cells.
+    //Return true if is not full, false otherwise.
     public static boolean isBoardAvailable(Disc[][] matrix) {
         for(int i = 0; i<matrix.length; i++) {
                 for(int j=0; j<matrix[i].length; j++) {
@@ -173,6 +179,9 @@ public class Game {
         }
         return false;
     }  
+    
+    //Method that implements the human player move. 
+    //Returns the column number entered by the player.
     public static int playerMove(Disc[][] matrix) throws IOException {
         int value = 0;
         boolean check = false;
@@ -183,6 +192,8 @@ public class Game {
         
         return value-1;
     }
+    
+    //Method that checks if a column is free or not.
     public static boolean isColumnFree(Disc[][] matrix, int col) {
         for(int i = 0; i < matrix.length; i++) {
             if(matrix[i][col] == Disc.NONE) {
@@ -194,13 +205,14 @@ public class Game {
         }
         return false;
     }
+    
+    //Method that change the value of a board cell with the disc value of 
+    //the player that made the move.
     public static Disc[][] dropCoin(Disc[][] matrix, int col, Disc disc){
         for(int i = matrix.length-1; i >= 0; i--) {
             if(matrix[i][col] == Disc.NONE) {
                     matrix[i][col] = disc;
                     break;
-            }else{
-                //System.out.println("error");
             }
         }
         return matrix;
